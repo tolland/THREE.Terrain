@@ -319,6 +319,7 @@ THREE.Terrain = function (options) {
             new THREE.PlaneGeometry(options.xSize, options.ySize, options.xSegments, options.ySegments),
             options.material
         );
+        mesh.name = 'Terrain Mesh';
     }
     delete options._mesh; // Remove the reference for GC
 
@@ -1985,6 +1986,7 @@ THREE.Terrain.ScatterMeshes = function (geometry, options) {
     }
     if (!options.scene) {
         options.scene = new THREE.Object3D();
+        options.scene.name = 'options.scene';
     }
     var defaultOptions = {
         spread: 0.025,
@@ -2081,7 +2083,9 @@ THREE.Terrain.ScatterMeshes = function (geometry, options) {
             g = THREE.BufferGeometryUtils.fromGeometry(g);
         }
         */
-        options.scene.add(new THREE.Mesh(g, options.mesh.material));
+        var merged_mesh = new THREE.Mesh(g, options.mesh.material);
+        merged_mesh.name = 'Merged Tree Mesh';
+        options.scene.add(merged_mesh);
     }
     // There's no BufferGeometry merge method implemented yet.
     else {
